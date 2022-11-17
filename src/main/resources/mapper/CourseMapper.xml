@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.buaa.moocserver.mapper.CourseMapper">
+    <select id="findById" resultType="com.buaa.moocserver.entity.Course">
+        SELECT cid, cname, prerequisites, about, cover, popular, itemId
+        from course
+        WHERE cid = #{id}
+    </select>
+    <select id="findByItemId" resultType="com.buaa.moocserver.entity.Course">
+        SELECT cid, cname, prerequisites, about, cover, popular, itemId
+        from course
+        WHERE itemId = #{itemId}
+    </select>
+    <select id="findPreListById" resultType="string">
+        SELECT pre_cid
+        from course_prerequisites
+        WHERE suc_cid = #{id}
+    </select>
+    <select id="getAllCourseList" resultType="com.buaa.moocserver.entity.Course">
+        select cid, cname, cover
+        from course
+    </select>
+    <select id="getPopularCourseList" resultType="com.buaa.moocserver.entity.Course">
+        select cid, cname, cover
+        from course
+        order by popular desc limit #{k}
+    </select>
+    <select id="getItemId">
+        select item_id
+        from course
+        where cid = #{id}
+    </select>
+    <update id="updateCoursePopular">
+        update course
+        set popular = popular + 1
+        where cid = #{id}
+    </update>
+</mapper>
